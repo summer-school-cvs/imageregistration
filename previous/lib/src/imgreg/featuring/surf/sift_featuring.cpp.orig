@@ -1,0 +1,48 @@
+#include "sift_featuring.h"
+#include <iostream>
+#include <opencv2/core/mat.hpp>
+#include <opencv2/xfeatures2d/nonfree.hpp>
+
+using namespace std;
+using namespace cv;
+using namespace cv::xfeatures2d;
+
+Ptr<Features> SiftFeaturing::getFeatures(const cv::Mat &img) const {
+    if (img.empty()) {
+        cout << "Could not open or find the image!\n" << endl;
+        return {};
+    }
+
+    vector<KeyPoint> keyPoints;
+    Mat descriptors;
+
+    detector->detectAndCompute(img, noArray(), keyPoints, descriptors);
+
+    return cv::makePtr<Features>(keyPoints, descriptors);
+}
+
+void SiftFeaturing::init() {
+<<<<<<< working copy
+  detector = SURF::create(nFeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma);
+=======
+    detector = SIFT::create(nFeatures, nOctaveLayers, contrastThreshold, edgeThreshold, sigma);
+>>>>>>> destination
+}
+
+void SiftFeaturing::free() { detector = nullptr; }
+
+void SiftFeaturing::setNFeatures(int n_Features) { SiftFeaturing::nFeatures = n_Features; }
+
+void SiftFeaturing::setNOctaveLayers(int n_OctaveLayers) {
+    SiftFeaturing::nOctaveLayers = n_OctaveLayers;
+}
+
+void SiftFeaturing::setContrastThreshold(double contrast_Threshold) {
+    SiftFeaturing::contrastThreshold = contrast_Threshold;
+}
+
+void SiftFeaturing::setEdgeThreshold(double edge_Threshold) {
+    SiftFeaturing::edgeThreshold = edge_Threshold;
+}
+
+void SiftFeaturing::setSigma(double sigma_) { SiftFeaturing::sigma = sigma_; }

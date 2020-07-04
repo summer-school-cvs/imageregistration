@@ -1,0 +1,51 @@
+#pragma once
+
+#include <opencv2/features2d.hpp>
+#include <opencv2/xfeatures2d/nonfree.hpp>
+#include "../../features/features.h"
+#include "../featuring.h"
+
+class SiftFeaturing : public Featuring {
+public:
+    SiftFeaturing() = default;
+
+    ~SiftFeaturing() = default;
+
+    void init() override;
+
+    cv::Ptr<Features> getFeatures(const cv::Mat &) const override;
+
+    void free() override;
+
+    void setNFeatures(int nFeatures);
+
+    void setNOctaveLayers(int nOctaveLayers);
+
+    void setContrastThreshold(double contrastThreshold);
+
+    void setEdgeThreshold(double edgeThreshold);
+
+    void setSigma(double sigma);
+
+<<<<<<< working copy
+ private:
+  cv::Ptr<cv::xfeatures2d::SURF> detector;
+=======
+private:
+    cv::Ptr<cv::xfeatures2d::SIFT> detector;
+>>>>>>> destination
+
+<<<<<<< working copy
+  int    nFeatures;
+  int    nOctaveLayers;
+  double contrastThreshold;
+  double edgeThreshold;
+  double sigma;
+};
+=======
+    int nFeatures{50};
+    int nOctaveLayers{3};
+    double contrastThreshold{0.04};
+    double edgeThreshold{10};
+    double sigma{1.6};
+};>>>>>>> destination
