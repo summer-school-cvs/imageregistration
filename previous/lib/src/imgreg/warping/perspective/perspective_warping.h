@@ -20,6 +20,17 @@ class PerspectiveWarping : Warping {
                      const cv::Mat &img2,
                      const cv::Mat &homography) const override;
 
+
+  void init() override
+  {
+      std::cout << "initialize PerspectiveWarping" << std::endl;
+  }
+
+  void free() override 
+  { 
+      std::cout << "smth_free" << std::endl;
+  }
+
  private:
   cv::InterpolationFlags interpAlgo_;
   cv::BorderTypes        borderType_;
