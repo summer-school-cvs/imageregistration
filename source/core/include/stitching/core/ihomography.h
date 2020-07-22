@@ -11,9 +11,11 @@ class IHomography {
  public:
   virtual ~IHomography() = default;
 
-  virtual void init() = 0;
-  virtual void exec(std::vector<cv::Point2f> &, std::vector<cv::Point2f> &, std::vector<cv::Mat> &) const = 0;
-  virtual void free() = 0;
+  virtual void init()                             = 0;
+  virtual void exec(std::vector<cv::Point2f> &,
+                    std::vector<cv::Point2f> &,
+                    std::vector<cv::Mat> &) const = 0;
+  virtual void free()                             = 0;
 };
 
-}
+}  // namespace stitching::core

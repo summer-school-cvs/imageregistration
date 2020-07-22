@@ -6,22 +6,22 @@ namespace stitching::homography {
 
 class Homography : public core::IHomography {
  public:
-  Homography() {};
+  Homography(){};
 
   void init() override;
   void free() override;
-  
+
   // getHomographies
   void exec(std::vector<cv::Point2f> &keyPoints_1,
-                       std::vector<cv::Point2f> &keyPoints_2,
-                       std::vector<cv::Mat> &    foundHomographies) const override;
+            std::vector<cv::Point2f> &keyPoints_2,
+            std::vector<cv::Mat> &    foundHomographies) const override;
 
   void setThreshold(const unsigned int &threshold);
   void setRansacReprojThreshold(const double &ransacReprojThreshold);
 
  private:
   double       ransacReprojThreshold = 0;
-  unsigned int threshold = 0;
+  unsigned int threshold             = 0;
 };
 
-}
+}  // namespace stitching::homography

@@ -26,7 +26,7 @@ void Homography::exec(std::vector<cv::Point2f> &keyPoints_1,
         outliers_2.push_back(keyPoints_2[i]);
       }
 
-    // 
+    //
     // swap(outliers_1, keyPoints_1);
     // swap(outliers_2, keyPoints_2);
 
@@ -41,10 +41,8 @@ void Homography::setRansacReprojThreshold(const double &_ransacReprojThreshold) 
   Homography::ransacReprojThreshold = _ransacReprojThreshold;
 }
 
-void Homography::init() {
-}
+void Homography::init() {}
 
-void Homography::free() {
-}
+void Homography::free() {}
 
-}
+}  // namespace stitching::homography
