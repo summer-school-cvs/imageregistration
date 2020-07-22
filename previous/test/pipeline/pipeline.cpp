@@ -11,8 +11,8 @@
 TEST(Pipeline, OutputsSomething) {
   auto data_path = std::filesystem::path(TEST_DATA_DIR);
 
-  auto img  = cv::imread(data_path / "img2_1.jpg");
-  auto img2 = cv::imread(data_path / "img2_2.jpg");
+  auto img  = cv::imread((data_path / "img2_1.jpg").string());
+  auto img2 = cv::imread((data_path / "img2_2.jpg").string());
 
   auto pipeline = cv::makePtr<Pipeline>();
 
