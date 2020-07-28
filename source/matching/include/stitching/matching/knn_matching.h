@@ -13,13 +13,13 @@ class KnnMatching : public core::IMatcher {
  public:
   void init() override;
 
-  std::vector<cv::DMatch> getMatches(cv::Ptr<core::IFeatures>, cv::Ptr<core::IFeatures>, int) const override;
+  std::vector<cv::DMatch> exec(cv::Ptr<core::IFeatures>, cv::Ptr<core::IFeatures>, int) const override;
 
   void free() override;
 
   void setMatcherType(cv::DescriptorMatcher::MatcherType matcherType);
 
-  void setRatio(float ratio);
+  void setRatio(const float & ratio);
 
  private:
   cv::Ptr<cv::DescriptorMatcher>     matcher;

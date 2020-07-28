@@ -7,8 +7,8 @@ namespace stitching::matching {
 
 void KnnMatching::init() { matcher = cv::DescriptorMatcher::create(matcherType); }
 
-std::vector<cv::DMatch> KnnMatching::getMatches(cv::Ptr<core::IFeatures> features1,
-                                                cv::Ptr<core::Features> features2,
+std::vector<cv::DMatch> KnnMatching::exec(cv::Ptr<core::IFeatures> features1,
+                                                cv::Ptr<core::IFeatures> features2,
                                                 int               k) const {
   std::vector<std::vector<cv::DMatch>> knnMatches;
 
@@ -31,6 +31,6 @@ void KnnMatching::setMatcherType(cv::DescriptorMatcher::MatcherType matcherType_
   KnnMatching::matcherType = matcherType_;
 }
 
-void KnnMatching::setRatio(float ratio_) { KnnMatching::ratio = ratio_; }
+void KnnMatching::setRatio(const float & ratio_) { KnnMatching::ratio = ratio_; }
 
 }
