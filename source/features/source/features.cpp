@@ -1,7 +1,7 @@
-#include "features/features.h"
+#include "ifeatures.h"
 
 #include <utility>
 
-Features::IFeatures(std::vector<cv::KeyPoint> keyPoints, cv::Mat descriptors)
+IFeatures::IFeatures(std::vector<cv::KeyPoint> keyPoints, cv::Mat descriptors)
     : keyPoints(std::move(keyPoints))
     , descriptors(std::move(descriptors)) {}

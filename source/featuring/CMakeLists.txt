@@ -19,7 +19,6 @@ target_include_directories(${PROJECT_NAME}
         include
         include/stitching/featuring/orb
         include/stitching/featuring/surf
-        ../features/include/stitching
         ../core/include/stitching/core
     )
 

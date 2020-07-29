@@ -2,7 +2,6 @@
 
 #include <opencv2/xfeatures2d/nonfree.hpp>
 
-#include "features/features.h"
 #include "ifeaturing.h"
 
 
@@ -14,15 +13,15 @@ struct SurfFeaturing : IFeaturing {
 
   void init() override;
 
-  cv::Ptr<Features> exec(const cv::Mat&) const override;
+  cv::Ptr<IFeatures> exec(const cv::Mat&) const override;
 
   void free() override;
 
-  void setHessianThreshold(double);
-  void setNOctaves(int);
-  void setNOctaveLayers(int);
-  void setExtended(bool);
-  void setUpright(bool);
+  void setHessianThreshold(const double&);
+  void setNOctaves(const int&);
+  void setNOctaveLayers(const int&);
+  void setExtended(const bool&);
+  void setUpright(const bool&);
 
  private:
   cv::Ptr<cv::xfeatures2d::SURF> detector;

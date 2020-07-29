@@ -9,14 +9,13 @@ add_library(${PROJECT_NAME})
 
 target_sources(${PROJECT_NAME}
     PRIVATE
-        include/stitching/features/features.h  
         source/features.cpp
     )
 
 target_include_directories(${PROJECT_NAME}
     PUBLIC
         include
-        include/stitching
+        ../core/include/stitching/core/
     )
 
 target_link_libraries(${PROJECT_NAME}

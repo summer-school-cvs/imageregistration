@@ -2,7 +2,6 @@
 
 #include <opencv2/features2d.hpp>
 
-#include "features/features.h"
 #include "ifeaturing.h"
 
 
@@ -16,29 +15,29 @@ struct OrbFeaturing : IFeaturing {
 
   void init() override;
 
-  cv::Ptr<Features> exec(const cv::Mat &) const override;
+  cv::Ptr<IFeatures> exec(const cv::Mat &) const override;
 
   void free() override;
 
 
 
-  void setNFeatures(int n_features);
+  void setNFeatures(const int &n_features);
 
-  void setScaleFactor(float scale_factor);
+  void setScaleFactor(const double &scale_factor);
 
-  void setNLevels(int n_levels);
+  void setNLevels(const int &n_levels);
 
-  void setEdgeThreshold(int edge_threshold);
+  void setEdgeThreshold(const int &edge_threshold);
 
-  void setFirstLevel(int first_level);
+  void setFirstLevel(const int &first_level);
 
-  void setWTA_K(int wta_k);
+  void setWTA_K(const int &wta_k);
 
-  void setScoreType(cv::ORB::ScoreType score_type);
+  void setScoreType(const cv::ORB::ScoreType &score_type);
 
-  void setPatchSize(int patch_size);
+  void setPatchSize(const int &patch_size);
 
-  void setFastThreshold(int fast_threshold);
+  void setFastThreshold(const int &fast_threshold);
 
 
 

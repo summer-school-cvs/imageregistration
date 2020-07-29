@@ -8,7 +8,7 @@ using namespace cv;
 using namespace cv::xfeatures2d;
 
 
-Ptr<Features> SurfFeaturing::exec(const Mat& img) const {
+Ptr<IFeatures> SurfFeaturing::exec(const Mat& img) const {
 
     if (img.empty()) {
         cout << "Could not open or find the image!\n" << endl;
@@ -20,7 +20,7 @@ Ptr<Features> SurfFeaturing::exec(const Mat& img) const {
 
   detector->detectAndCompute(img, noArray(), keyPoints, descriptors);
 
-  return makePtr<Features>(keyPoints, descriptors);
+  return makePtr<IFeatures>(keyPoints, descriptors);
 }
 
 void SurfFeaturing::init() {
@@ -30,9 +30,9 @@ void SurfFeaturing::init() {
 void SurfFeaturing::free() { detector = nullptr; }
 
 
-void SurfFeaturing::setHessianThreshold(double val) { hessianThreshold = val; }
-void SurfFeaturing::setNOctaves(int val) { nOctaves = val; }
-void SurfFeaturing::setNOctaveLayers(int val) { nOctaveLayers = val; }
-void SurfFeaturing::setExtended(bool val) { extended = val; }
-void SurfFeaturing::setUpright(bool val) { upright = val; }
+void SurfFeaturing::setHessianThreshold(const double &val) { hessianThreshold = val; }
+void SurfFeaturing::setNOctaves(const int &val) { nOctaves = val; }
+void SurfFeaturing::setNOctaveLayers(const int &val) { nOctaveLayers = val; }
+void SurfFeaturing::setExtended(const bool &val) { extended = val; }
+void SurfFeaturing::setUpright(const bool &val) { upright = val; }
 
