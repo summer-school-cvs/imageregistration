@@ -11,10 +11,9 @@ class Homography : public core::IHomography {
   void init() override;
   void free() override;
 
-  // getHomographies
   void exec(std::vector<cv::Point2f> &keyPoints_1,
             std::vector<cv::Point2f> &keyPoints_2,
-            std::vector<cv::Mat> &    foundHomographies) const override;
+            std::vector<cv::Mat>     &foundHomographies) const override;
 
   void setThreshold(const unsigned int &threshold);
   void setRansacReprojThreshold(const double &ransacReprojThreshold);
