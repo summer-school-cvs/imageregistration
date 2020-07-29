@@ -26,20 +26,20 @@ void OrbFeaturing::free() { detector = nullptr; }
 
 
 
-void OrbFeaturing::setNFeatures(const int &n_features) { nfeatures = n_features; }
+void OrbFeaturing::setNFeatures(int n_features) { nfeatures = n_features; }
 
-void OrbFeaturing::setScaleFactor(const double &scale_Factor) { scaleFactor = scale_Factor; }
+void OrbFeaturing::setScaleFactor(double scale_Factor) { scaleFactor = scale_Factor; }
 
-void OrbFeaturing::setNLevels(const int &n_levels) { nlevels = n_levels; }
+void OrbFeaturing::setNLevels(int n_levels) { nlevels = n_levels; }
 
-void OrbFeaturing::setEdgeThreshold(const int &edge_threshold) { edgeThreshold = edge_threshold;}
+void OrbFeaturing::setEdgeThreshold(int edge_threshold) { edgeThreshold = edge_threshold;}
 
-void OrbFeaturing::setFirstLevel(const int &first_level) { firstLevel = first_level; }
+void OrbFeaturing::setFirstLevel(int first_level) { firstLevel = first_level; }
 
-void OrbFeaturing::setWTA_K(const int &wta_k) { WTA_K = wta_k; }
+void OrbFeaturing::setWTA_K(int wta_k) { WTA_K = wta_k; }
 
-void OrbFeaturing::setScoreType(const cv::ORB::ScoreType &score_type) { scoreType = score_type; }
+void OrbFeaturing::setScoreType(cv::ORB::ScoreType score_type) { scoreType = score_type; }
 
-void OrbFeaturing::setPatchSize(const int &patch_size) { patchSize = patch_size; }
+void OrbFeaturing::setPatchSize(int patch_size) { patchSize = patch_size; }
 
-void OrbFeaturing::setFastThreshold(const int &fast_threshold) { fastThreshold = fast_threshold; }
+void OrbFeaturing::setFastThreshold(int fast_threshold) { fastThreshold = fast_threshold; }

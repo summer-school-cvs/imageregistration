@@ -17,11 +17,11 @@ struct SurfFeaturing : IFeaturing {
 
   void free() override;
 
-  void setHessianThreshold(const double&);
-  void setNOctaves(const int&);
-  void setNOctaveLayers(const int&);
-  void setExtended(const bool&);
-  void setUpright(const bool&);
+  void setHessianThreshold(double);
+  void setNOctaves(int);
+  void setNOctaveLayers(int);
+  void setExtended(bool);
+  void setUpright(bool);
 
  private:
   cv::Ptr<cv::xfeatures2d::SURF> detector;

@@ -21,23 +21,23 @@ struct OrbFeaturing : IFeaturing {
 
 
 
-  void setNFeatures(const int &n_features);
+  void setNFeatures(int n_features);
 
-  void setScaleFactor(const double &scale_factor);
+  void setScaleFactor(double scale_factor);
 
-  void setNLevels(const int &n_levels);
+  void setNLevels(int n_levels);
 
-  void setEdgeThreshold(const int &edge_threshold);
+  void setEdgeThreshold(int edge_threshold);
 
-  void setFirstLevel(const int &first_level);
+  void setFirstLevel(int first_level);
 
-  void setWTA_K(const int &wta_k);
+  void setWTA_K(int wta_k);
 
-  void setScoreType(const cv::ORB::ScoreType &score_type);
+  void setScoreType(cv::ORB::ScoreType score_type);
 
-  void setPatchSize(const int &patch_size);
+  void setPatchSize(int patch_size);
 
-  void setFastThreshold(const int &fast_threshold);
+  void setFastThreshold(int fast_threshold);
 
 
 
