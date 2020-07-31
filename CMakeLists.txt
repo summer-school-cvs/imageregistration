@@ -8,6 +8,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(source/core)
 add_subdirectory(source/multiregistration)
 
+
+add_subdirectory(source/features)
+add_subdirectory(source/featuring)
+
 add_subdirectory(source/matching)
 
 add_subdirectory(source/homography)
