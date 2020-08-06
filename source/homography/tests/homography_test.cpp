@@ -1,12 +1,10 @@
-#include "../include/stitching/homography/homography.h"
+#include <../include/stitching/homography/homography.h>
 
 #include <gtest/gtest.h>
 
 #include <opencv2/core/types.hpp>
 #include <opencv2/features2d.hpp>
 #include <opencv2/imgcodecs.hpp>
-
-//using namespace stitching::homography;
 
 namespace {
 	
