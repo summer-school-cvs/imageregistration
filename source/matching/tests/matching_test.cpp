@@ -5,7 +5,7 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/cvstd.hpp>
 
-#include "../include/stitching/matching/knn_matching.h"
+#include <../include/stitching/matching/knn_matching.h>
 
 namespace {
 
