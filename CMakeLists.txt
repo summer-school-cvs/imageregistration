@@ -16,7 +16,4 @@ add_subdirectory(source/matching)
 add_subdirectory(source/homography)
 add_subdirectory(source/warping)
 
-add_subdirectory(source/homography/tests)
-
-
 enable_testing()
