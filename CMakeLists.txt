@@ -14,7 +14,6 @@ add_subdirectory(source/features)
 add_subdirectory(source/featuring)
 
 add_subdirectory(source/matching)
-add_subdirectory(source/matching/tests)
 
 add_subdirectory(source/homography)
 
