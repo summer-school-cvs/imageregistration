@@ -10,14 +10,8 @@ target_sources(${PROJECT_NAME}
             featuring_test.cpp
         )
 
-target_include_directories(${PROJECT_NAME}
-        PUBLIC
-            ../../core/include/stitching/core
-            ../include/stitching/featuring
-        )
-
 target_link_libraries(${PROJECT_NAME}
-            Featuring
+            featuring
             opencv_core
             gtest_main
         )

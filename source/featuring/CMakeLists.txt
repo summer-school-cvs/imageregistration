@@ -23,7 +23,7 @@ add_featuring_lib(TARGET orbfeaturing
         source/orb/orb_featuring.cpp
     LIBS
         core
-        opencv_core
+        ${OpenCV_LIBS}
     )
 
 add_featuring_lib(TARGET surffeaturing
@@ -32,7 +32,7 @@ add_featuring_lib(TARGET surffeaturing
         source/surf/surf_featuring.cpp
     LIBS
         core
-        opencv_core
+        ${OpenCV_LIBS}
     )
 
 add_library(${PROJECT_NAME} INTERFACE)
@@ -41,3 +41,5 @@ target_link_libraries(${PROJECT_NAME}
         surffeaturing
         orbfeaturing
     )
+
+add_subdirectory(tests)
