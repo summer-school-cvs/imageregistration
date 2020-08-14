@@ -1,4 +1,4 @@
-#include <../include/stitching/homography/homography.h>
+#include <stitching/homography/homography.h>
 
 #include <gtest/gtest.h>
 
