@@ -13,5 +13,5 @@ target_include_directories(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     INTERFACE
-        opencv_core
+        ${OpenCV_LIBS}
     )

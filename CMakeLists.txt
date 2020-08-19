@@ -17,5 +17,6 @@ add_subdirectory(source/multiregistration)
 add_subdirectory(source/featuring)
 add_subdirectory(source/matching)
 add_subdirectory(source/homography)
+add_subdirectory(source/warping)
 
 enable_testing()

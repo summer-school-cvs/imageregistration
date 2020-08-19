@@ -1,25 +1,22 @@
-#pragma once
-
-#include <../include/stitching/warping/warping.h>
-
 #include <gtest/gtest.h>
+#include <stitching/warping/warping.h>
 
 #include <opencv2/core/mat.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/opencv.hpp>
 
 namespace {
-	
+
 TEST(Warping_Test, output_Warping_Test) {
+  cv::Mat img0;
+  cv::Mat img1;
+  cv::Mat transformation_matrix;
 
-  std::vector<cv::Point2f> Points_1;
-  std::vector<cv::Point2f> Points_2;
+  stitching::warping::Warping warping;
 
-  auto warping = cv::makePtr<stitching::warping::Warping>();
-
-  std::vector<cv::Mat> transformation_matrix;
-  
-  EXPECT_THROW(warping->exec(Points_1, Points_2, transformation_matrix), std::invalid_argument);
-  
+  warping.init();
+  EXPECT_THROW(warping.exec(img0, img1, transformation_matrix), std::invalid_argument);
+  warping.free();
 }
-}  
+
+}  // namespace
