@@ -1,4 +1,4 @@
-#include "include/stitching/matching/knn_matching.h"
+#include "../include/stitching/matching/knn_matching.h"
 
 #include <iostream>
 #include <vector>
@@ -7,9 +7,13 @@ namespace stitching::matching {
 
 void KnnMatching::init() { matcher = cv::DescriptorMatcher::create(matcherType); }
 
-std::vector<cv::DMatch> KnnMatching::exec(cv::Ptr<core::IFeatures> features1,
-                                                cv::Ptr<core::IFeatures> features2,
-                                                int               k) const {
+std::vector<cv::DMatch> KnnMatching::exec(const core::FeaturesPtr& features1,
+                                          const core::FeaturesPtr& features2,
+                                          int                      k) const {
+  if (features1->keyPoints.empty() || features2->keyPoints.empty()) {
+    throw std::invalid_argument(std::string("Empty features!"));
+  }
+
   std::vector<std::vector<cv::DMatch>> knnMatches;
 
   matcher->knnMatch(features1->descriptors, features2->descriptors, knnMatches, k);
@@ -31,6 +35,6 @@ void KnnMatching::setMatcherType(cv::DescriptorMatcher::MatcherType matcherType_
   KnnMatching::matcherType = matcherType_;
 }
 
-void KnnMatching::setRatio(const float & ratio_) { KnnMatching::ratio = ratio_; }
+void KnnMatching::setRatio(const float& ratio_) { KnnMatching::ratio = ratio_; }
 
-}
+}  // namespace stitching::matching

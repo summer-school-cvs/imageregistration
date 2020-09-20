@@ -1,19 +1,20 @@
 #pragma once
 
+#include <stitching/core/ifeaturing.h>
+
 #include <opencv2/xfeatures2d/nonfree.hpp>
 
-#include "ifeaturing.h"
+namespace stitching::featuring {
 
-
-struct SurfFeaturing : IFeaturing {
-
+class SurfFeaturing : public core::IFeaturing {
+ public:
   SurfFeaturing() = default;
 
   ~SurfFeaturing() = default;
 
   void init() override;
 
-  cv::Ptr<IFeatures> exec(const cv::Mat&) const override;
+  core::FeaturesUPtr exec(const cv::Mat&) const override;
 
   void free() override;
 
@@ -27,8 +28,10 @@ struct SurfFeaturing : IFeaturing {
   cv::Ptr<cv::xfeatures2d::SURF> detector;
 
   double hessianThreshold = 100;
-  int    nOctaves         =   4;
-  int    nOctaveLayers    =   3;
+  int    nOctaves         = 4;
+  int    nOctaveLayers    = 3;
   bool   extended         = false;
   bool   upright          = false;
 };
+
+}  // namespace stitching::featuring

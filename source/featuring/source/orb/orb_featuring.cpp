@@ -1,30 +1,26 @@
-#include <iostream>
+#include "../include/stitching/featuring/orb/orb_featuring.h"
 
-#include "orb_featuring.h"
+#include <exception>
 
+namespace stitching::featuring {
 
-using cv::Mat;
+void OrbFeaturing::init() {
+  detector = cv::ORB::create(nfeatures, scaleFactor, nlevels, edgeThreshold, firstLevel, WTA_K,
+                             scoreType, patchSize, fastThreshold);
+}
 
-void OrbFeaturing::init() {detector = cv::ORB::create(nfeatures, scaleFactor, nlevels, edgeThreshold, firstLevel, WTA_K, scoreType, patchSize, fastThreshold);}
+core::FeaturesUPtr OrbFeaturing::exec(const cv::Mat &img) const {
+  if (img.empty())
+    throw std::invalid_argument("Empty image");
 
-cv::Ptr<IFeatures> OrbFeaturing::exec(const cv::Mat &img) const {
+  auto result = std::make_unique<core::Features>();
 
-    if (img.empty()) {
-        std::cout << "Could not open or find the image!\n" << std::endl;
-        return {};
-    }
+  detector->detectAndCompute(img, cv::noArray(), result->keyPoints, result->descriptors);
 
-    std::vector<cv::KeyPoint> keyPoints;
-    Mat                  descriptors;
-
-    detector->detectAndCompute(img, cv::noArray(), keyPoints, descriptors);
-
-    return cv::makePtr<IFeatures>(keyPoints, descriptors);
+  return result;
 }
 
 void OrbFeaturing::free() { detector = nullptr; }
-
-
 
 void OrbFeaturing::setNFeatures(int n_features) { nfeatures = n_features; }
 
@@ -32,7 +28,7 @@ void OrbFeaturing::setScaleFactor(double scale_Factor) { scaleFactor = scale_Fac
 
 void OrbFeaturing::setNLevels(int n_levels) { nlevels = n_levels; }
 
-void OrbFeaturing::setEdgeThreshold(int edge_threshold) { edgeThreshold = edge_threshold;}
+void OrbFeaturing::setEdgeThreshold(int edge_threshold) { edgeThreshold = edge_threshold; }
 
 void OrbFeaturing::setFirstLevel(int first_level) { firstLevel = first_level; }
 
@@ -43,3 +39,5 @@ void OrbFeaturing::setScoreType(cv::ORB::ScoreType score_type) { scoreType = sco
 void OrbFeaturing::setPatchSize(int patch_size) { patchSize = patch_size; }
 
 void OrbFeaturing::setFastThreshold(int fast_threshold) { fastThreshold = fast_threshold; }
+
+}  // namespace stitching::featuring
