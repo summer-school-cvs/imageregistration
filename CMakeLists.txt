@@ -8,11 +8,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(source/core)
 add_subdirectory(source/multiregistration)
 
+add_subdirectory(thirdparty/googletest googletest)
 
 add_subdirectory(source/features)
 add_subdirectory(source/featuring)
-
 add_subdirectory(source/matching)
-
 add_subdirectory(source/homography)
+add_subdirectory(source/warping)
 
+enable_testing()

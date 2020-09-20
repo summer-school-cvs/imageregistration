@@ -1,10 +1,14 @@
-#include "include/stitching/homography/homography.h"
+#include "../include/stitching/homography/homography.h"
 
 namespace stitching::homography {
 
 void Homography::exec(std::vector<cv::Point2f> &keyPoints_1,
                       std::vector<cv::Point2f> &keyPoints_2,
                       std::vector<cv::Mat>     &foundHomographies) const {
+
+  if ((keyPoints_1.empty()) || (keyPoints_2.empty()))
+    throw std::invalid_argument(std::string("Error: argument is empty!"));
+  
   std::vector<cv::Point2f> outliers_1;
   std::vector<cv::Point2f> outliers_2;
 
