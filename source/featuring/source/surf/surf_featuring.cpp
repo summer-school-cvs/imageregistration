@@ -1,34 +1,26 @@
-#include <iostream>
+#include "../include/stitching/featuring/surf/surf_featuring.h"
 
-#include "surf_featuring.h"
+#include <exception>
 
+namespace stitching::featuring {
 
-using namespace std;
-using namespace cv;
-using namespace cv::xfeatures2d;
+core::FeaturesUPtr SurfFeaturing::exec(const cv::Mat& img) const {
+  if (img.empty())
+    throw std::invalid_argument("Empty image.");
 
+  auto result = std::make_unique<core::Features>();
 
-Ptr<IFeatures> SurfFeaturing::exec(const Mat& img) const {
+  detector->detectAndCompute(img, cv::noArray(), result->keyPoints, result->descriptors);
 
-    if (img.empty()) {
-        cout << "Could not open or find the image!\n" << endl;
-        return {};
-    }
-
-  vector<KeyPoint> keyPoints;
-  Mat              descriptors;
-
-  detector->detectAndCompute(img, noArray(), keyPoints, descriptors);
-
-  return makePtr<IFeatures>(keyPoints, descriptors);
+  return result;
 }
 
 void SurfFeaturing::init() {
-  detector = SURF::create(hessianThreshold, nOctaves, nOctaveLayers, extended, upright);
+  detector =
+      cv::xfeatures2d::SURF::create(hessianThreshold, nOctaves, nOctaveLayers, extended, upright);
 }
 
 void SurfFeaturing::free() { detector = nullptr; }
-
 
 void SurfFeaturing::setHessianThreshold(double val) { hessianThreshold = val; }
 void SurfFeaturing::setNOctaves(int val) { nOctaves = val; }
@@ -36,3 +28,4 @@ void SurfFeaturing::setNOctaveLayers(int val) { nOctaveLayers = val; }
 void SurfFeaturing::setExtended(bool val) { extended = val; }
 void SurfFeaturing::setUpright(bool val) { upright = val; }
 
+}  // namespace stitching::featuring

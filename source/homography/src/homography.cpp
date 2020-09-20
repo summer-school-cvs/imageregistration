@@ -1,10 +1,10 @@
-#include "include/stitching/homography/homography.h"
+#include "../include/stitching/homography/homography.h"
 
 namespace stitching::homography {
 
 void Homography::exec(std::vector<cv::Point2f> &keyPoints_1,
                       std::vector<cv::Point2f> &keyPoints_2,
-                      std::vector<cv::Mat>     &foundHomographies) const {
+                      std::vector<cv::Mat> &    foundHomographies) const {
   std::vector<cv::Point2f> outliers_1;
   std::vector<cv::Point2f> outliers_2;
 
@@ -12,8 +12,8 @@ void Homography::exec(std::vector<cv::Point2f> &keyPoints_1,
   outliers_2.reserve(keyPoints_2.size());
 
   std::vector<uchar> mask;
-  cv::Mat           fHomography;
-  unsigned int      outliers_count = 0;
+  cv::Mat            fHomography;
+  unsigned int       outliers_count = 0;
 
   do {
     fHomography = findHomography(keyPoints_1, keyPoints_2, mask, cv::RANSAC, ransacReprojThreshold);

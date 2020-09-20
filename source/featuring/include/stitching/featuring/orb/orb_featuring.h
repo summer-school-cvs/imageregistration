@@ -1,45 +1,30 @@
 #pragma once
 
+#include <stitching/core/ifeaturing.h>
+
 #include <opencv2/features2d.hpp>
 
-#include "ifeaturing.h"
+namespace stitching::featuring {
 
-
-struct OrbFeaturing : IFeaturing {
-
-  OrbFeaturing() = default;
-
+class OrbFeaturing : public core::IFeaturing {
+ public:
+  OrbFeaturing()  = default;
   ~OrbFeaturing() = default;
 
-
+  core::FeaturesUPtr exec(const cv::Mat &) const override;
 
   void init() override;
-
-  cv::Ptr<IFeatures> exec(const cv::Mat &) const override;
-
   void free() override;
 
-
-
   void setNFeatures(int n_features);
-
   void setScaleFactor(double scale_factor);
-
   void setNLevels(int n_levels);
-
   void setEdgeThreshold(int edge_threshold);
-
   void setFirstLevel(int first_level);
-
   void setWTA_K(int wta_k);
-
   void setScoreType(cv::ORB::ScoreType score_type);
-
   void setPatchSize(int patch_size);
-
   void setFastThreshold(int fast_threshold);
-
-
 
  private:
   cv::Ptr<cv::ORB> detector;
@@ -54,3 +39,5 @@ struct OrbFeaturing : IFeaturing {
   int                patchSize{31};
   int                fastThreshold{20};
 };
+
+}  // namespace stitching::featuring
