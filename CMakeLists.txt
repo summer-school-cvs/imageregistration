@@ -12,11 +12,6 @@ message(STATUS "Test data dir: ${TEST_DATA_DIR}")
 
 add_subdirectory(thirdparty/googletest googletest)
 
-add_subdirectory(source/core)
-add_subdirectory(source/multiregistration)
-add_subdirectory(source/featuring)
-add_subdirectory(source/matching)
-add_subdirectory(source/homography)
-add_subdirectory(source/warping)
+add_subdirectory(source)
 
 enable_testing()

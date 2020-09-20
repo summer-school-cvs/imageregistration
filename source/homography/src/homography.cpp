@@ -1,5 +1,13 @@
 #include "../include/stitching/homography/homography.h"
 
+#include <stitching/core/factory.h>
+
+using stitching::core::IHomography;
+using stitching::core::IHomographyPtr;
+REGISTER_TYPE(IHomography, Homography, [](const std::string &) -> IHomographyPtr {
+  return std::make_shared<stitching::homography::Homography>();
+});
+
 namespace stitching::homography {
 
 void Homography::exec(std::vector<cv::Point2f> &keyPoints_1,

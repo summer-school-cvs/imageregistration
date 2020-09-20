@@ -2,6 +2,7 @@
 
 #include <stitching/core/features.h>
 
+#include <memory>
 #include <opencv2/core/mat.hpp>
 #include <vector>
 
@@ -16,5 +17,7 @@ class IMatcher {
   virtual void init() = 0;
   virtual void free() = 0;
 };
+
+using IMatcherPtr = std::shared_ptr<IMatcher>;
 
 }  // namespace stitching::core

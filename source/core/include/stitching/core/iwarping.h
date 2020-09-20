@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <opencv2/core/mat.hpp>
 
 namespace stitching::core {
@@ -15,5 +16,7 @@ class IWarping {
                        const cv::Mat &img2,
                        const cv::Mat &homography) const = 0;
 };
+
+using IWarpingPtr = std::shared_ptr<IWarping>;
 
 }  // namespace stitching::core

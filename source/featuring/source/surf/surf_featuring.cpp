@@ -1,6 +1,14 @@
 #include "../include/stitching/featuring/surf/surf_featuring.h"
 
+#include <stitching/core/factory.h>
+
 #include <exception>
+
+using stitching::core::IFeaturing;
+using stitching::core::IFeaturingPtr;
+REGISTER_TYPE(IFeaturing, SurfFeaturing, [](const std::string&) -> IFeaturingPtr {
+  return std::make_shared<stitching::featuring::SurfFeaturing>();
+});
 
 namespace stitching::featuring {
 
