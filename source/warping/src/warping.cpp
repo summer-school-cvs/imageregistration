@@ -1,15 +1,22 @@
-#include "include/stitching/warping/warping.h"
+#include "../include/stitching/warping/warping.h"
 
 #include <opencv2/core/mat.hpp>
 #include <opencv2/imgproc.hpp>
 #include <utility>
 
 namespace stitching::warping {
-	
 
-cv::Mat Warping::exec(const cv::Mat &img1,
-                                 const cv::Mat &img2,
-                                 const cv::Mat &homography) const {
+void Warping::init() {}
+void Warping::free() {}
+
+cv::Mat Warping::exec(const cv::Mat &img1, const cv::Mat &img2, const cv::Mat &homography) const {
+  if (img1.empty())
+    throw std::invalid_argument("Invalid first image.");
+  if (img2.empty())
+    throw std::invalid_argument("Invalid second image.");
+  if (homography.empty())
+    throw std::invalid_argument("Invalid homography.");
+
   cv::Mat output;
 
   cv::warpPerspective(img1, output, homography, img2.size(), interpAlgo_, borderType_,
@@ -24,8 +31,6 @@ void Warping::setInterpAlgo(cv::InterpolationFlags interpAlgo) {
 
 void Warping::setBorderType(cv::BorderTypes borderType) { borderType_ = borderType; }
 
-void Warping::setBorderValue(cv::Scalar borderValue) {
-  borderValue_ = std::move(borderValue);
-}
+void Warping::setBorderValue(cv::Scalar borderValue) { borderValue_ = std::move(borderValue); }
 
-}
+}  // namespace stitching::warping
