@@ -1,8 +1,16 @@
 #include "../include/stitching/warping/warping.h"
 
+#include <stitching/core/factory.h>
+
 #include <opencv2/core/mat.hpp>
 #include <opencv2/imgproc.hpp>
 #include <utility>
+
+using stitching::core::IWarping;
+using stitching::core::IWarpingPtr;
+REGISTER_TYPE(IWarping, Warping, [](const std::string &) -> IWarpingPtr {
+  return std::make_shared<stitching::warping::Warping>();
+});
 
 namespace stitching::warping {
 

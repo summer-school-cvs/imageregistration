@@ -1,6 +1,14 @@
 #include "../include/stitching/featuring/orb/orb_featuring.h"
 
+#include <stitching/core/factory.h>
+
 #include <exception>
+
+using stitching::core::IFeaturing;
+using stitching::core::IFeaturingPtr;
+REGISTER_TYPE(IFeaturing, OrbFeaturing, [](const std::string&) -> IFeaturingPtr {
+  return std::make_shared<stitching::featuring::OrbFeaturing>();
+});
 
 namespace stitching::featuring {
 
@@ -9,7 +17,7 @@ void OrbFeaturing::init() {
                              scoreType, patchSize, fastThreshold);
 }
 
-core::FeaturesUPtr OrbFeaturing::exec(const cv::Mat &img) const {
+core::FeaturesUPtr OrbFeaturing::exec(const cv::Mat& img) const {
   if (img.empty())
     throw std::invalid_argument("Empty image");
 

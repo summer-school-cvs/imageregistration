@@ -1,7 +1,15 @@
 #include "../include/stitching/matching/knn_matching.h"
 
+#include <stitching/core/factory.h>
+
 #include <iostream>
 #include <vector>
+
+using stitching::core::IMatcher;
+using stitching::core::IMatcherPtr;
+REGISTER_TYPE(IMatcher, KnnMatcher, [](const std::string&) -> IMatcherPtr {
+  return std::make_shared<stitching::matching::KnnMatching>();
+});
 
 namespace stitching::matching {
 

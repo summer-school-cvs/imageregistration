@@ -1,9 +1,9 @@
 #pragma once
 
+#include <memory>
 #include <opencv2/core/mat.hpp>
 #include <opencv2/opencv.hpp>
-
-#include<vector>
+#include <vector>
 
 namespace stitching::core {
 
@@ -17,5 +17,7 @@ class IHomography {
                     std::vector<cv::Mat> &) const = 0;
   virtual void free()                             = 0;
 };
+
+using IHomographyPtr = std::shared_ptr<IHomography>;
 
 }  // namespace stitching::core

@@ -2,6 +2,7 @@
 
 #include <stitching/core/features.h>
 
+#include <memory>
 #include <opencv2/core/mat.hpp>
 
 namespace stitching::core {
@@ -15,5 +16,7 @@ class IFeaturing {
 
   virtual FeaturesUPtr exec(const cv::Mat &) const = 0;
 };
+
+using IFeaturingPtr = std::shared_ptr<IFeaturing>;
 
 }  // namespace stitching::core
