@@ -1,6 +1,22 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(ImageRegistration)
+include(cmake/Helpers.cmake)
+git_description(GIT_DESCRIPTOR GIT_TAG GIT_COMMIT_COUNT)
+
+if(NOT BUILD_NUMBER)
+    set(BUILD_NUMBER "")
+else()
+    set(BUILD_NUMBER ".${BUILD_NUMBER}")
+endif()
+
+project(ImageRegistration
+    VERSION 0.0.${GIT_COMMIT_COUNT}${BUILD_NUMBER}
+    DESCRIPTION "Image stitching. ${GIT_DESCRIPTOR}"
+    )
+
+add_compile_definitions(
+PROJECT_VERSION="${PROJECT_VERSION}"
+PROJECT_DESCRIPTION="${PROJECT_DESCRIPTION}")
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

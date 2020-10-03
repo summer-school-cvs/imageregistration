@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(core)
 
 find_package(OpenCV REQUIRED)
+find_package(Boost REQUIRED)
 
 add_library(${PROJECT_NAME} INTERFACE)
 
@@ -14,4 +15,5 @@ target_include_directories(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     INTERFACE
         ${OpenCV_LIBS}
+        Boost::headers
     )
