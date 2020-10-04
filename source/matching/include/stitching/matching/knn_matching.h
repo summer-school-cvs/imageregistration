@@ -12,9 +12,7 @@ class KnnMatching : public core::IMatcher {
  public:
   void init() override;
 
-  std::vector<cv::DMatch> exec(const core::FeaturesPtr&,
-                               const core::FeaturesPtr&,
-                               int) const override;
+  std::vector<cv::DMatch> exec(const core::FeaturesPtr&, const core::FeaturesPtr&) const override;
 
   void free() override;
 
@@ -26,6 +24,7 @@ class KnnMatching : public core::IMatcher {
   cv::Ptr<cv::DescriptorMatcher>     matcher;
   cv::DescriptorMatcher::MatcherType matcherType;
   float                              ratio;
+  int                                k = 0;
 };
 
 }  // namespace stitching::matching

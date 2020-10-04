@@ -17,4 +17,6 @@ class IStitcher {
   virtual void    free()                   = 0;
 };
 
+using IStitcherPtr = std::shared_ptr<IStitcher>;
+
 }  // namespace stitching::core

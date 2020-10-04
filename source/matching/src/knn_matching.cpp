@@ -16,8 +16,7 @@ namespace stitching::matching {
 void KnnMatching::init() { matcher = cv::DescriptorMatcher::create(matcherType); }
 
 std::vector<cv::DMatch> KnnMatching::exec(const core::FeaturesPtr& features1,
-                                          const core::FeaturesPtr& features2,
-                                          int                      k) const {
+                                          const core::FeaturesPtr& features2) const {
   if (features1->keyPoints.empty() || features2->keyPoints.empty()) {
     throw std::invalid_argument(std::string("Empty features!"));
   }

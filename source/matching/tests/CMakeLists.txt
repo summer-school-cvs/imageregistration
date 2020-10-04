@@ -19,4 +19,4 @@ target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
 add_test(NAME matching_test COMMAND ${PROJECT_NAME})
 
-target_link_libraries(${PROJECT_NAME} Matching)
+target_link_libraries(${PROJECT_NAME} matching)

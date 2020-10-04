@@ -10,7 +10,7 @@ target_sources(${PROJECT_NAME}
 
 target_link_libraries(${PROJECT_NAME}
     gtest_main
-    Warping
+    warping
     )
 
 add_test(NAME warping_test COMMAND ${PROJECT_NAME})

@@ -6,9 +6,11 @@
 
 using stitching::core::IFeaturing;
 using stitching::core::IFeaturingPtr;
-REGISTER_TYPE(IFeaturing, OrbFeaturing, [](const std::string&) -> IFeaturingPtr {
-  return std::make_shared<stitching::featuring::OrbFeaturing>();
-});
+REGISTER_TYPE(IFeaturing,
+              OrbFeaturing,
+              [](const std::string&, const boost::property_tree::ptree&) -> IFeaturingPtr {
+                return std::make_shared<stitching::featuring::OrbFeaturing>();
+              });
 
 namespace stitching::featuring {
 

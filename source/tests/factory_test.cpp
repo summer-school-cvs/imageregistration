@@ -19,11 +19,11 @@ DEFINE_TYPE(IWarping, Warping);
 namespace {
 
 TEST(FactoryTest, create) {
-  auto surf       = stitching::core::Factory::create<IFeaturing>(SurfFeaturingKey);
-  auto orb        = stitching::core::Factory::create<IFeaturing>(OrbFeaturingKey);
-  auto homography = stitching::core::Factory::create<IHomography>(HomographyKey);
-  auto matcher    = stitching::core::Factory::create<IMatcher>(KnnMatcherKey);
-  auto warping    = stitching::core::Factory::create<IWarping>(WarpingKey);
+  auto surf       = stitching::core::Factory::create<IFeaturing>(IFeaturingSurfFeaturingKey);
+  auto orb        = stitching::core::Factory::create<IFeaturing>(IFeaturingOrbFeaturingKey);
+  auto homography = stitching::core::Factory::create<IHomography>(IHomographyHomographyKey);
+  auto matcher    = stitching::core::Factory::create<IMatcher>(IMatcherKnnMatcherKey);
+  auto warping    = stitching::core::Factory::create<IWarping>(IWarpingWarpingKey);
 
   EXPECT_NE(nullptr, surf);
   EXPECT_NE(nullptr, orb);
@@ -45,11 +45,11 @@ using namespace stitching;
 namespace {
 
 TEST(FactoryTest, create_check_types) {
-  auto surf       = stitching::core::Factory::create<IFeaturing>(SurfFeaturingKey);
-  auto orb        = stitching::core::Factory::create<IFeaturing>(OrbFeaturingKey);
-  auto homography = stitching::core::Factory::create<IHomography>(HomographyKey);
-  auto matcher    = stitching::core::Factory::create<IMatcher>(KnnMatcherKey);
-  auto warping    = stitching::core::Factory::create<IWarping>(WarpingKey);
+  auto surf       = stitching::core::Factory::create<IFeaturing>(IFeaturingSurfFeaturingKey);
+  auto orb        = stitching::core::Factory::create<IFeaturing>(IFeaturingOrbFeaturingKey);
+  auto homography = stitching::core::Factory::create<IHomography>(IHomographyHomographyKey);
+  auto matcher    = stitching::core::Factory::create<IMatcher>(IMatcherKnnMatcherKey);
+  auto warping    = stitching::core::Factory::create<IWarping>(IWarpingWarpingKey);
 
   EXPECT_NE(nullptr, std::dynamic_pointer_cast<featuring::SurfFeaturing>(surf));
   EXPECT_NE(nullptr, std::dynamic_pointer_cast<featuring::OrbFeaturing>(orb));

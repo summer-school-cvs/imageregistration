@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stitching/core/logging.h>
+
 #include <functional>
 #include <iostream>
 #include <list>
@@ -16,6 +18,7 @@ class Factory {
 
   template <typename T, typename... Args>
   static void registrate(const KeyType &key, CreatorFun<T, const KeyType &, Args...> fun) {
+    SPDLOG_LOGGER_DEBUG(getLogger("stitching.factory"), "Register {}", key);
     creatorsMap<T, const KeyType &, Args...>()[key] = std::move(fun);
   }
 
@@ -39,19 +42,23 @@ class Factory {
 struct FactoryHelper {
   template <typename T, typename... Args>
   FactoryHelper(const std::string &                                                    key,
-                typename Factory::template CreatorFun<T, const std::string &, Args...> creator) {
+                typename Factory::template CreatorFun<T, const std::string &, Args...> creator)
+      : key_val(key) {
     Factory::registrate<T>(key, std::move(creator));
   }
 
-  bool load() { return true; }
+  const std::string key_val;
 };
 
 }  // namespace stitching::core
 
-#define REGISTER_TYPE(iface, name, creator) \
-  stitching::core::FactoryHelper name##_##iface##_factory_helper(#name, std::function(creator))
+#define REGISTER_TYPE(iface, name, creator)                                                      \
+  static stitching::core::FactoryHelper name##_##iface##_factory_helper(#name,                   \
+                                                                        std::function(creator)); \
+  std::string                           name##_##iface##_factory_helper_fun() {                  \
+    return name##_##iface##_factory_helper.key_val;                    \
+  }
 
-#define DEFINE_TYPE(iface, name)                                                             \
-  extern stitching::core::FactoryHelper name##_##iface##_factory_helper;                     \
-  static bool              name##_##iface##_loaded = name##_##iface##_factory_helper.load(); \
-  static const std::string name##Key               = #name
+#define DEFINE_TYPE(iface, name)                                  \
+  std::string              name##_##iface##_factory_helper_fun(); \
+  static const std::string iface##name##Key = name##_##iface##_factory_helper_fun()

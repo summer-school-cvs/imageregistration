@@ -15,7 +15,7 @@ class IMatcher {
 
   virtual void configure(const boost::property_tree::ptree &) {}
 
-  virtual std::vector<cv::DMatch> exec(const FeaturesPtr &, const FeaturesPtr &, int) const = 0;
+  virtual std::vector<cv::DMatch> exec(const FeaturesPtr &, const FeaturesPtr &) const = 0;
 
   virtual void init() = 0;
   virtual void free() = 0;
