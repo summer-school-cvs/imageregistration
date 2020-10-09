@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stitching/core/hypothesis.h>
+
 #include <boost/property_tree/ptree.hpp>
 #include <memory>
 #include <opencv2/core/mat.hpp>
@@ -14,7 +16,10 @@ class IHomography {
 
   virtual void configure(const boost::property_tree::ptree &) {}
 
-  virtual void init()                             = 0;
+  virtual void                      init()                                       = 0;
+  virtual std::list<HypothesisUPtr> exec(const std::vector<cv::Point2f> &,
+                                         const std::vector<cv::Point2f> &) const = 0;
+
   virtual void exec(std::vector<cv::Point2f> &,
                     std::vector<cv::Point2f> &,
                     std::vector<cv::Mat> &) const = 0;

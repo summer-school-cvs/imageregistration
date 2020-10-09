@@ -52,4 +52,48 @@ void Homography::init() {}
 
 void Homography::free() {}
 
+std::list<core::HypothesisUPtr> Homography::exec(
+    const std::vector<cv::Point2f> &keyPoints_1,
+    const std::vector<cv::Point2f> &keyPoints_2) const {
+  std::list<core::HypothesisUPtr> result;
+
+  std::vector<cv::Point2f> outliers_1 = keyPoints_1;
+  std::vector<cv::Point2f> outliers_2 = keyPoints_2;
+
+  outliers_1.reserve(keyPoints_1.size());
+  outliers_2.reserve(keyPoints_2.size());
+
+  std::vector<uchar> mask;
+  cv::Mat            fHomography;
+  unsigned int       outliers_count = 0;
+
+  do {
+    auto hypothesis = std::make_unique<core::Hypothesis>();
+
+    hypothesis->homography =
+        findHomography(outliers_1, outliers_2, mask, cv::RANSAC, ransacReprojThreshold);
+
+    std::vector<cv::Point2f> tmp1;
+    std::vector<cv::Point2f> tmp2;
+    for (unsigned int i = 0; i < mask.size(); ++i) {
+      if (mask[i]) {
+        hypothesis->first.push_back(keyPoints_1[i]);
+        hypothesis->second.push_back(keyPoints_2[i]);
+      } else {
+        ++outliers_count;
+        tmp1.push_back(keyPoints_1[i]);
+        tmp2.push_back(keyPoints_2[i]);
+      }
+    }
+
+    outliers_1 = tmp1;
+    outliers_2 = tmp2;
+
+    result.push_back(std::move(hypothesis));
+
+  } while (outliers_count < threshold);
+
+  return result;
+}
+
 }  // namespace stitching::homography

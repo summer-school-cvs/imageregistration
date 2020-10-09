@@ -11,6 +11,7 @@ find_package(Boost REQUIRED)
 add_library(${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
     PRIVATE
+        include/stitching/core/hypothesis.h
         include/stitching/core/factory.h
         include/stitching/core/features.h
         include/stitching/core/ifeaturing.h
