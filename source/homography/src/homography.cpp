@@ -1,12 +1,15 @@
 #include "../include/stitching/homography/homography.h"
 
 #include <stitching/core/factory.h>
+#include <stitching/core/logging.h>
 
 using stitching::core::IHomography;
 using stitching::core::IHomographyPtr;
 REGISTER_TYPE(IHomography, Homography, [](const std::string &) -> IHomographyPtr {
   return std::make_shared<stitching::homography::Homography>();
 });
+
+auto logger = stitching::core::getLogger("stitching.homography");
 
 namespace stitching::homography {
 
@@ -55,6 +58,7 @@ void Homography::free() {}
 std::list<core::HypothesisUPtr> Homography::exec(
     const std::vector<cv::Point2f> &keyPoints_1,
     const std::vector<cv::Point2f> &keyPoints_2) const {
+  SPDLOG_LOGGER_DEBUG(logger, "Begin finding hypotheses...");
   std::list<core::HypothesisUPtr> result;
 
   std::vector<cv::Point2f> outliers_1 = keyPoints_1;
@@ -86,12 +90,17 @@ std::list<core::HypothesisUPtr> Homography::exec(
       }
     }
 
+    SPDLOG_LOGGER_DEBUG(logger, "Hypothesis {}. Inliers {}. Outliers {}. ", result.size(),
+                        hypothesis->first.size(), tmp1.size());
+
     outliers_1 = tmp1;
     outliers_2 = tmp2;
 
     result.push_back(std::move(hypothesis));
 
   } while (outliers_count < threshold);
+
+  SPDLOG_LOGGER_DEBUG(logger, "Finded {} hypotheses.", result.size());
 
   return result;
 }
