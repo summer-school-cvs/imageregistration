@@ -66,14 +66,43 @@ void SimpleStitcher::init() {
 cv::Mat SimpleStitcher::exec(std::list<cv::Mat> images) {
   SPDLOG_LOGGER_DEBUG(logger, "Exec...");
 
-  std::list<FeaturesPtr> features;
-  for (auto i : images)
+  SPDLOG_LOGGER_INFO(logger, "Featuring...");
+  std::vector<std::vector<cv::Point2f>> points;
+  std::vector<FeaturesPtr>              features;
+  std::size_t                           img_counter = 0;
+  for (auto i : images) {
     features.push_back(m->feature_finder->exec(i));
 
-  std::list<std::vector<cv::DMatch>> matches;
-  for (auto first = features.begin(); first != features.end(); ++first) {
-    for (auto second = std::next(first); second != features.end(); ++second)
-      matches.push_back(m->matcher->exec(*first, *second));
+    points.emplace_back();
+    cv::KeyPoint::convert(features.back()->keyPoints, points.back());
+
+    SPDLOG_LOGGER_DEBUG(logger, "Image {}. Features {}.", img_counter,
+                        features.back()->keyPoints.size());
+
+    ++img_counter;
+  }
+
+  std::map<std::pair<std::size_t, std::size_t>, std::list<HypothesisUPtr>> hypotheses;
+  for (auto first = 0ul; first < features.size(); ++first) {
+    for (auto second = first + 1; second < features.size(); ++second) {
+      auto matches = m->matcher->exec(features[first], features[second]);
+
+      SPDLOG_LOGGER_DEBUG(logger, "Images {}-{}. Matches {}.", first, second, matches.size());
+
+      std::vector<cv::Point2f> points_1;
+      std::vector<cv::Point2f> points_2;
+
+      for (auto e : matches) {
+        auto idx1 = e.queryIdx;
+        auto idx2 = e.trainIdx;
+        points_1.push_back(points[first][idx1]);
+        points_2.push_back(points[second][idx2]);
+      }
+
+      auto hypothesis = m->homo_finder->exec(points_1, points_2);
+      SPDLOG_LOGGER_DEBUG(logger, "Images {}-{}. Hypotheses {}.", first, second, hypothesis.size());
+      hypotheses[std::make_pair(first, second)] = std::move(hypothesis);
+    }
   }
 
   return {};
