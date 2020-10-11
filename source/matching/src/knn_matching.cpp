@@ -7,9 +7,11 @@
 
 using stitching::core::IMatcher;
 using stitching::core::IMatcherPtr;
-REGISTER_TYPE(IMatcher, KnnMatcher, [](const std::string&) -> IMatcherPtr {
-  return std::make_shared<stitching::matching::KnnMatching>();
-});
+REGISTER_TYPE(IMatcher,
+              KnnMatcher,
+              [](const std::string&, const boost::property_tree::ptree&) -> IMatcherPtr {
+                return std::make_shared<stitching::matching::KnnMatching>();
+              });
 
 namespace stitching::matching {
 
@@ -25,11 +27,15 @@ std::vector<cv::DMatch> KnnMatching::exec(const core::FeaturesPtr& features1,
 
   matcher->knnMatch(features1->descriptors, features2->descriptors, knnMatches, k);
 
-  std::vector<cv::DMatch> matches{};
+  if (k == 1)
+    return std::move(knnMatches.front());
+
+  std::vector<cv::DMatch> matches;
 
   for (auto& knnMatch : knnMatches) {
-    if (knnMatch[0].distance < ratio * knnMatch[1].distance) {
-      matches.push_back(knnMatch[0]);
+    for (auto i = 1ul; i < knnMatch.size(); ++i) {
+      if (knnMatch[0].distance < ratio * knnMatch[i].distance)
+        matches.push_back(knnMatch[0]);
     }
   }
 
@@ -43,5 +49,7 @@ void KnnMatching::setMatcherType(cv::DescriptorMatcher::MatcherType matcherType_
 }
 
 void KnnMatching::setRatio(const float& ratio_) { KnnMatching::ratio = ratio_; }
+
+void KnnMatching::setCountBestMatches(int k_) { k = k_; }
 
 }  // namespace stitching::matching

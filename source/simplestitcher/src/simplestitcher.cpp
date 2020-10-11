@@ -2,7 +2,6 @@
 
 #include <stitching/core/factory.h>
 #include <stitching/core/logging.h>
-#include <stitching/stitcher/typedefinitions.h>
 
 namespace bpt = boost::property_tree;
 using namespace stitching::core;
@@ -61,6 +60,12 @@ void SimpleStitcher::setWarping(core::IWarpingPtr ptr) { m->warper = ptr; }
 
 void SimpleStitcher::init() {
   SPDLOG_LOGGER_DEBUG(logger, "Initing...");
+
+  m->feature_finder->init();
+  m->matcher->init();
+  m->homo_finder->init();
+  m->warper->init();
+
   SPDLOG_LOGGER_DEBUG(logger, "Inited.");
 }
 cv::Mat SimpleStitcher::exec(std::list<cv::Mat> images) {
@@ -82,6 +87,7 @@ cv::Mat SimpleStitcher::exec(std::list<cv::Mat> images) {
     ++img_counter;
   }
 
+  SPDLOG_LOGGER_INFO(logger, "Matching and hypothesis...");
   std::map<std::pair<std::size_t, std::size_t>, std::list<HypothesisUPtr>> hypotheses;
   for (auto first = 0ul; first < features.size(); ++first) {
     for (auto second = first + 1; second < features.size(); ++second) {
@@ -110,6 +116,12 @@ cv::Mat SimpleStitcher::exec(std::list<cv::Mat> images) {
 
 void SimpleStitcher::free() {
   SPDLOG_LOGGER_DEBUG(logger, "Get free...");
+
+  m->feature_finder->free();
+  m->matcher->free();
+  m->homo_finder->free();
+  m->warper->free();
+
   SPDLOG_LOGGER_DEBUG(logger, "Free.");
 }
 

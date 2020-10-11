@@ -19,12 +19,13 @@ class KnnMatching : public core::IMatcher {
   void setMatcherType(cv::DescriptorMatcher::MatcherType matcherType);
 
   void setRatio(const float& ratio);
+  void setCountBestMatches(int);
 
  private:
   cv::Ptr<cv::DescriptorMatcher>     matcher;
-  cv::DescriptorMatcher::MatcherType matcherType;
-  float                              ratio;
-  int                                k = 0;
+  cv::DescriptorMatcher::MatcherType matcherType = cv::DescriptorMatcher::MatcherType::BRUTEFORCE;
+  float                              ratio       = 0.7f;
+  int                                k           = 2;
 };
 
 }  // namespace stitching::matching

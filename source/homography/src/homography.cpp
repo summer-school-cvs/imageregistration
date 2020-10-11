@@ -5,9 +5,11 @@
 
 using stitching::core::IHomography;
 using stitching::core::IHomographyPtr;
-REGISTER_TYPE(IHomography, Homography, [](const std::string &) -> IHomographyPtr {
-  return std::make_shared<stitching::homography::Homography>();
-});
+REGISTER_TYPE(IHomography,
+              Homography,
+              [](const std::string &, const boost::property_tree::ptree &) -> IHomographyPtr {
+                return std::make_shared<stitching::homography::Homography>();
+              });
 
 auto logger = stitching::core::getLogger("stitching.homography");
 
@@ -55,30 +57,22 @@ void Homography::init() {}
 
 void Homography::free() {}
 
-std::list<core::HypothesisUPtr> Homography::exec(
-    const std::vector<cv::Point2f> &keyPoints_1,
-    const std::vector<cv::Point2f> &keyPoints_2) const {
+std::list<core::HypothesisUPtr> Homography::exec(std::vector<cv::Point2f> keyPoints_1,
+                                                 std::vector<cv::Point2f> keyPoints_2) const {
   if (keyPoints_1.empty() || keyPoints_2.empty())
     throw std::invalid_argument("Vector with keypoints is empty.");
 
   SPDLOG_LOGGER_DEBUG(logger, "Begin finding hypotheses...");
   std::list<core::HypothesisUPtr> result;
 
-  std::vector<cv::Point2f> outliers_1 = keyPoints_1;
-  std::vector<cv::Point2f> outliers_2 = keyPoints_2;
-
-  outliers_1.reserve(keyPoints_1.size());
-  outliers_2.reserve(keyPoints_2.size());
-
   std::vector<uchar> mask;
-  cv::Mat            fHomography;
   unsigned int       outliers_count = 0;
 
   do {
     auto hypothesis = std::make_unique<core::Hypothesis>();
 
     hypothesis->homography =
-        findHomography(outliers_1, outliers_2, mask, cv::RANSAC, ransacReprojThreshold);
+        cv::findHomography(keyPoints_1, keyPoints_2, mask, cv::RANSAC, ransacReprojThreshold);
 
     std::vector<cv::Point2f> tmp1;
     std::vector<cv::Point2f> tmp2;
@@ -96,8 +90,8 @@ std::list<core::HypothesisUPtr> Homography::exec(
     SPDLOG_LOGGER_DEBUG(logger, "Hypothesis {}. Inliers {}. Outliers {}. ", result.size(),
                         hypothesis->first.size(), tmp1.size());
 
-    outliers_1 = tmp1;
-    outliers_2 = tmp2;
+    keyPoints_1 = tmp1;
+    keyPoints_2 = tmp2;
 
     result.push_back(std::move(hypothesis));
 

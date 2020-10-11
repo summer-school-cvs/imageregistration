@@ -26,9 +26,9 @@ TEST(FactoryTest, create) {
   boost::property_tree::ptree config;
   auto surf    = Factory::create<IFeaturing, const bpt::ptree&>(IFeaturingSurfFeaturingKey, config);
   auto orb     = Factory::create<IFeaturing, const bpt::ptree&>(IFeaturingOrbFeaturingKey, config);
-  auto homo    = Factory::create<IHomography>(IHomographyHomographyKey);
-  auto matcher = Factory::create<IMatcher>(IMatcherKnnMatcherKey);
-  auto warping = Factory::create<IWarping>(IWarpingWarpingKey);
+  auto homo    = Factory::create<IHomography, const bpt::ptree&>(IHomographyHomographyKey, config);
+  auto matcher = Factory::create<IMatcher, const bpt::ptree&>(IMatcherKnnMatcherKey, config);
+  auto warping = Factory::create<IWarping, const bpt::ptree&>(IWarpingWarpingKey, config);
 
   EXPECT_NE(nullptr, surf);
   EXPECT_NE(nullptr, orb);

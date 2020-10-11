@@ -8,9 +8,11 @@
 
 using stitching::core::IWarping;
 using stitching::core::IWarpingPtr;
-REGISTER_TYPE(IWarping, Warping, [](const std::string &) -> IWarpingPtr {
-  return std::make_shared<stitching::warping::Warping>();
-});
+REGISTER_TYPE(IWarping,
+              Warping,
+              [](const std::string &, const boost::property_tree::ptree &) -> IWarpingPtr {
+                return std::make_shared<stitching::warping::Warping>();
+              });
 
 namespace stitching::warping {
 
