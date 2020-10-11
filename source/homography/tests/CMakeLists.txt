@@ -17,6 +17,6 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
-add_test(NAME homography_test COMMAND ${PROJECT_NAME})
-
 target_link_libraries(${PROJECT_NAME} homography)
+
+add_test(NAME homography COMMAND ${PROJECT_NAME})

@@ -18,5 +18,5 @@ target_link_libraries(${PROJECT_NAME}
             gtest_main
         )
 
-add_test(NAME featuring_test COMMAND ${PROJECT_NAME})
+add_test(NAME factory COMMAND ${PROJECT_NAME})
 

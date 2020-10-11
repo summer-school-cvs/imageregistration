@@ -19,5 +19,7 @@ target_link_libraries(${PROJECT_NAME}
         core
     )
 
-add_subdirectory(tests)
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()
 

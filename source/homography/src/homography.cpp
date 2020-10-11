@@ -58,6 +58,9 @@ void Homography::free() {}
 std::list<core::HypothesisUPtr> Homography::exec(
     const std::vector<cv::Point2f> &keyPoints_1,
     const std::vector<cv::Point2f> &keyPoints_2) const {
+  if (keyPoints_1.empty() || keyPoints_2.empty())
+    throw std::invalid_argument("Vector with keypoints is empty.");
+
   SPDLOG_LOGGER_DEBUG(logger, "Begin finding hypotheses...");
   std::list<core::HypothesisUPtr> result;
 

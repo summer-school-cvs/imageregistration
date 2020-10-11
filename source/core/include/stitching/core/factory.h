@@ -18,7 +18,7 @@ class Factory {
 
   template <typename T, typename... Args>
   static void registrate(const KeyType &key, CreatorFun<T, const KeyType &, Args...> fun) {
-    SPDLOG_LOGGER_DEBUG(getLogger("stitching.factory"), "Register {}", key);
+    SPDLOG_LOGGER_INFO(getLogger("stitching.factory"), "Register {}", key);
     creatorsMap<T, const KeyType &, Args...>()[key] = std::move(fun);
   }
 
@@ -52,12 +52,13 @@ struct FactoryHelper {
 
 }  // namespace stitching::core
 
-#define REGISTER_TYPE(iface, name, creator)                                                      \
-  static stitching::core::FactoryHelper name##_##iface##_factory_helper(#name,                   \
-                                                                        std::function(creator)); \
-  std::string                           name##_##iface##_factory_helper_fun() {                  \
-    return name##_##iface##_factory_helper.key_val;                    \
-  }
+#define REGISTER_TYPE(iface, name, creator)                                                        \
+  std::string name##_##iface##_factory_helper_fun() {                                              \
+    static stitching::core::FactoryHelper name##_##iface##_factory_helper(#name,                   \
+                                                                          std::function(creator)); \
+    return name##_##iface##_factory_helper.key_val;                                                \
+  }                                                                                                \
+  static const std::string iface##name##Key = name##_##iface##_factory_helper_fun()
 
 #define DEFINE_TYPE(iface, name)                                  \
   std::string              name##_##iface##_factory_helper_fun(); \

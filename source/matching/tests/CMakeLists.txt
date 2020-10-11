@@ -17,6 +17,6 @@ include_directories(${OpenCV_INCLUDE_DIRS})
 
 target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS})
 
-add_test(NAME matching_test COMMAND ${PROJECT_NAME})
-
 target_link_libraries(${PROJECT_NAME} matching)
+
+add_test(NAME matching COMMAND ${PROJECT_NAME})

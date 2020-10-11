@@ -13,5 +13,5 @@ target_link_libraries(${PROJECT_NAME}
     warping
     )
 
-add_test(NAME warping_test COMMAND ${PROJECT_NAME})
+add_test(NAME warping COMMAND ${PROJECT_NAME})
 

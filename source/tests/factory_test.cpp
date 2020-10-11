@@ -10,6 +10,10 @@ using stitching::core::IHomography;
 using stitching::core::IMatcher;
 using stitching::core::IWarping;
 
+namespace bpt = boost::property_tree;
+
+using namespace stitching::core;
+
 DEFINE_TYPE(IFeaturing, SurfFeaturing);
 DEFINE_TYPE(IFeaturing, OrbFeaturing);
 DEFINE_TYPE(IHomography, Homography);
@@ -19,15 +23,16 @@ DEFINE_TYPE(IWarping, Warping);
 namespace {
 
 TEST(FactoryTest, create) {
-  auto surf       = stitching::core::Factory::create<IFeaturing>(IFeaturingSurfFeaturingKey);
-  auto orb        = stitching::core::Factory::create<IFeaturing>(IFeaturingOrbFeaturingKey);
-  auto homography = stitching::core::Factory::create<IHomography>(IHomographyHomographyKey);
-  auto matcher    = stitching::core::Factory::create<IMatcher>(IMatcherKnnMatcherKey);
-  auto warping    = stitching::core::Factory::create<IWarping>(IWarpingWarpingKey);
+  boost::property_tree::ptree config;
+  auto surf    = Factory::create<IFeaturing, const bpt::ptree&>(IFeaturingSurfFeaturingKey, config);
+  auto orb     = Factory::create<IFeaturing, const bpt::ptree&>(IFeaturingOrbFeaturingKey, config);
+  auto homo    = Factory::create<IHomography>(IHomographyHomographyKey);
+  auto matcher = Factory::create<IMatcher>(IMatcherKnnMatcherKey);
+  auto warping = Factory::create<IWarping>(IWarpingWarpingKey);
 
   EXPECT_NE(nullptr, surf);
   EXPECT_NE(nullptr, orb);
-  EXPECT_NE(nullptr, homography);
+  EXPECT_NE(nullptr, homo);
   EXPECT_NE(nullptr, matcher);
   EXPECT_NE(nullptr, warping);
 }
@@ -45,15 +50,16 @@ using namespace stitching;
 namespace {
 
 TEST(FactoryTest, create_check_types) {
-  auto surf       = stitching::core::Factory::create<IFeaturing>(IFeaturingSurfFeaturingKey);
-  auto orb        = stitching::core::Factory::create<IFeaturing>(IFeaturingOrbFeaturingKey);
-  auto homography = stitching::core::Factory::create<IHomography>(IHomographyHomographyKey);
-  auto matcher    = stitching::core::Factory::create<IMatcher>(IMatcherKnnMatcherKey);
-  auto warping    = stitching::core::Factory::create<IWarping>(IWarpingWarpingKey);
+  boost::property_tree::ptree config;
+  auto surf    = Factory::create<IFeaturing, const bpt::ptree&>(IFeaturingSurfFeaturingKey, config);
+  auto orb     = Factory::create<IFeaturing, const bpt::ptree&>(IFeaturingOrbFeaturingKey, config);
+  auto homo    = Factory::create<IHomography>(IHomographyHomographyKey);
+  auto matcher = Factory::create<IMatcher>(IMatcherKnnMatcherKey);
+  auto warping = Factory::create<IWarping>(IWarpingWarpingKey);
 
   EXPECT_NE(nullptr, std::dynamic_pointer_cast<featuring::SurfFeaturing>(surf));
   EXPECT_NE(nullptr, std::dynamic_pointer_cast<featuring::OrbFeaturing>(orb));
-  EXPECT_NE(nullptr, std::dynamic_pointer_cast<homography::Homography>(homography));
+  EXPECT_NE(nullptr, std::dynamic_pointer_cast<homography::Homography>(homo));
   EXPECT_NE(nullptr, std::dynamic_pointer_cast<matching::KnnMatching>(matcher));
   EXPECT_NE(nullptr, std::dynamic_pointer_cast<warping::Warping>(warping));
 }

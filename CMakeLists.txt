@@ -44,4 +44,4 @@ add_subdirectory(thirdparty/spdlog spdlog)
 
 add_subdirectory(source)
 
-
+enable_testing()
