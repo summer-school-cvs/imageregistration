@@ -68,7 +68,7 @@ void SimpleStitcher::init() {
 
   SPDLOG_LOGGER_DEBUG(logger, "Inited.");
 }
-cv::Mat SimpleStitcher::exec(std::list<cv::Mat> images) {
+cv::Mat SimpleStitcher::exec(std::vector<cv::Mat> images) {
   SPDLOG_LOGGER_DEBUG(logger, "Exec...");
 
   SPDLOG_LOGGER_INFO(logger, "Featuring...");
@@ -88,12 +88,18 @@ cv::Mat SimpleStitcher::exec(std::list<cv::Mat> images) {
   }
 
   SPDLOG_LOGGER_INFO(logger, "Matching and hypothesis...");
-  std::map<std::pair<std::size_t, std::size_t>, std::list<HypothesisUPtr>> hypotheses;
+  std::map<std::pair<std::size_t, std::size_t>, std::vector<HypothesisUPtr>> hypotheses;
   for (auto first = 0ul; first < features.size(); ++first) {
     for (auto second = first + 1; second < features.size(); ++second) {
       auto matches = m->matcher->exec(features[first], features[second]);
 
-      SPDLOG_LOGGER_DEBUG(logger, "Images {}-{}. Matches {}.", first, second, matches.size());
+      if (logger->should_log(spdlog::level::trace)) {
+        cv::Mat out_image;
+        cv::drawMatches(images[first], features[first]->keyPoints, images[second],
+                        features[second]->keyPoints, matches, out_image);
+        SPDLOG_LOGGER_TRACE(logger, "Images {}-{}. Matches {}. {}", first, second, matches.size(),
+                            out_image);
+      }
 
       std::vector<cv::Point2f> points_1;
       std::vector<cv::Point2f> points_2;
@@ -106,7 +112,23 @@ cv::Mat SimpleStitcher::exec(std::list<cv::Mat> images) {
       }
 
       auto hypothesis = m->homo_finder->exec(points_1, points_2);
-      SPDLOG_LOGGER_DEBUG(logger, "Images {}-{}. Hypotheses {}.", first, second, hypothesis.size());
+
+      if (logger->should_log(spdlog::level::debug)) {
+        for (auto i = 0ul; i < hypothesis.size(); ++i) {
+          std::vector<cv::KeyPoint> points_1;
+          std::vector<cv::KeyPoint> points_2;
+          cv::KeyPoint::convert(hypothesis[i]->first, points_1);
+          cv::KeyPoint::convert(hypothesis[i]->second, points_2);
+          std::vector<cv::DMatch> h_matches;
+          h_matches.reserve(points_1.size());
+          for (auto i = 0ul; i < points_1.size(); ++i)
+            h_matches.emplace_back(i, i, 0);
+          cv::Mat out_image;
+          cv::drawMatches(images[first], points_1, images[second], points_2, h_matches, out_image);
+          SPDLOG_LOGGER_DEBUG(logger, "Images {}-{}. Hypothesis {}. {}", first, second, i,
+                              out_image);
+        }
+      }
       hypotheses[std::make_pair(first, second)] = std::move(hypothesis);
     }
   }

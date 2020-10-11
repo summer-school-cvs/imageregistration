@@ -16,10 +16,15 @@ project(ImageRegistration
 
 file(TO_NATIVE_PATH "${CMAKE_CURRENT_LIST_DIR}/config/imageregistration.json" CONFIG_FILE)
 
+if(NOT LOG_LEVEL)
+    set(LOG_LEVEL 0)
+endif()
+
 add_compile_definitions(
     PROJECT_VERSION="${PROJECT_VERSION}"
     PROJECT_DESCRIPTION="${PROJECT_DESCRIPTION}"
     CONFIG_FILE="${CONFIG_FILE}"
+    SPDLOG_ACTIVE_LEVEL=${LOG_LEVEL}
 )
 
 set(CMAKE_CXX_STANDARD 20)

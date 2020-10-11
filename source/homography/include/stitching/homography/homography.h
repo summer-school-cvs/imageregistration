@@ -11,8 +11,8 @@ class Homography : public core::IHomography {
   void init() override;
   void free() override;
 
-  std::list<core::HypothesisUPtr> exec(std::vector<cv::Point2f>,
-                                       std::vector<cv::Point2f>) const override;
+  std::vector<core::HypothesisUPtr> exec(std::vector<cv::Point2f>,
+                                         std::vector<cv::Point2f>) const override;
 
   void exec(std::vector<cv::Point2f> &keyPoints_1,
             std::vector<cv::Point2f> &keyPoints_2,

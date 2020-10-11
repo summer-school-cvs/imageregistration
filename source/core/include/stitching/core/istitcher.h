@@ -12,9 +12,9 @@ class IStitcher {
 
   virtual void configure(const boost::property_tree::ptree &) {}
 
-  virtual void    init()                   = 0;
-  virtual cv::Mat exec(std::list<cv::Mat>) = 0;
-  virtual void    free()                   = 0;
+  virtual void    init()                     = 0;
+  virtual cv::Mat exec(std::vector<cv::Mat>) = 0;
+  virtual void    free()                     = 0;
 };
 
 using IStitcherPtr = std::shared_ptr<IStitcher>;

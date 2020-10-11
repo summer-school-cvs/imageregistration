@@ -16,9 +16,9 @@ class IHomography {
 
   virtual void configure(const boost::property_tree::ptree &) {}
 
-  virtual void                      init()                               = 0;
-  virtual std::list<HypothesisUPtr> exec(std::vector<cv::Point2f>,
-                                         std::vector<cv::Point2f>) const = 0;
+  virtual void                        init()                               = 0;
+  virtual std::vector<HypothesisUPtr> exec(std::vector<cv::Point2f>,
+                                           std::vector<cv::Point2f>) const = 0;
 
   virtual void exec(std::vector<cv::Point2f> &,
                     std::vector<cv::Point2f> &,

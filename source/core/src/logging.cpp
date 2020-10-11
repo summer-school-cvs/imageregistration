@@ -6,6 +6,11 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/sinks/systemd_sink.h>
 
+#include <atomic>
+#include <chrono>
+#include <filesystem>
+#include <opencv2/imgcodecs.hpp>
+
 namespace {
 
 std::vector<spdlog::sink_ptr> createSinks() {
@@ -44,6 +49,25 @@ LoggerPtr getLogger(std::string_view name) {
     spdlog::register_logger(logger);
   }
   return logger;
+}
+
+static auto img_log_path = []() {
+  auto path = std::filesystem::temp_directory_path() / "log_img" /
+              std::to_string(std::chrono::system_clock::now().time_since_epoch().count());
+  if (!std::filesystem::exists(path))
+    std::filesystem::create_directories(path);
+  return path;
+}();
+
+std::string saveLogImage(const cv::Mat &img) {
+  static std::atomic_size_t img_counter = {0};
+
+  if (!std::filesystem::exists(img_log_path))
+    return "invalid_save_path";
+
+  auto name = (img_log_path / (std::to_string(img_counter++) + ".png")).string();
+  cv::imwrite(name, img);
+  return name;
 }
 
 }  // namespace stitching::core

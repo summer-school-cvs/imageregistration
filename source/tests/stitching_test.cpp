@@ -32,10 +32,13 @@ std::list<fs::path> test_dirs() {
   return result;
 }
 
-class SimpleStitcherTest : public testing::TestWithParam<fs::path> {};
+class SimpleStitcherTest : public testing::TestWithParam<fs::path> {
+ public:
+  static void SetUpTestSuite() { stitching::core::initLoggers(0, nullptr); }
+};
 
 TEST_P(SimpleStitcherTest, pipeline) {
-  std::list<cv::Mat> images;
+  std::vector<cv::Mat> images;
   for (auto& p : fs::directory_iterator(GetParam())) {
     images.push_back(cv::imread(p.path().string()));
   }

@@ -16,7 +16,7 @@ class SimpleStitcher : public core::IStitcher {
   void setWarping(core::IWarpingPtr);
 
   void    init() override;
-  cv::Mat exec(std::list<cv::Mat>) override;
+  cv::Mat exec(std::vector<cv::Mat>) override;
   void    free() override;
 
  private:
