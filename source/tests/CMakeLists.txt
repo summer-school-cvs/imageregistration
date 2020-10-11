@@ -18,5 +18,19 @@ target_link_libraries(${PROJECT_NAME}
             gtest_main
         )
 
-add_test(NAME factory COMMAND ${PROJECT_NAME})
+add_executable(${PROJECT_NAME}2)
+target_sources(${PROJECT_NAME}2
+        PRIVATE
+            factory_test2.cpp
+        )
 
+target_link_libraries(${PROJECT_NAME}2
+            featuring
+            matching
+            homography
+            warping
+            gtest_main
+        )
+
+add_test(NAME factory COMMAND ${PROJECT_NAME})
+add_test(NAME factory2 COMMAND ${PROJECT_NAME})
