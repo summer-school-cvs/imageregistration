@@ -1,0 +1,21 @@
+{
+    "Stitcher": {
+        "type": "SimpleStitcher"
+    },
+
+    "Featuring": {
+        "type": "SurfFeaturing"
+    },
+
+    "Matching":{
+        "type": "KnnMatcher"
+    },
+
+    "Homography": {
+        "type": "Homography"
+    },
+
+    "Warping": {
+        "type": "Warping"
+    }
+}

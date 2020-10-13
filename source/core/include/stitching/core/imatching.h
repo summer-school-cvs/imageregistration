@@ -2,6 +2,7 @@
 
 #include <stitching/core/features.h>
 
+#include <boost/property_tree/ptree.hpp>
 #include <memory>
 #include <opencv2/core/mat.hpp>
 #include <vector>
@@ -12,7 +13,9 @@ class IMatcher {
  public:
   virtual ~IMatcher() = default;
 
-  virtual std::vector<cv::DMatch> exec(const FeaturesPtr&, const FeaturesPtr&, int) const = 0;
+  virtual void configure(const boost::property_tree::ptree &) {}
+
+  virtual std::vector<cv::DMatch> exec(const FeaturesPtr &, const FeaturesPtr &) const = 0;
 
   virtual void init() = 0;
   virtual void free() = 0;

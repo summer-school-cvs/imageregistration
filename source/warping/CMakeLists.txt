@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(Warping)
+project(warping)
 
 add_library(${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
@@ -19,4 +19,6 @@ target_link_libraries(${PROJECT_NAME}
         core
     )
 
-add_subdirectory(tests)
+if(BUILD_TESTING)
+    add_subdirectory(tests)
+endif()

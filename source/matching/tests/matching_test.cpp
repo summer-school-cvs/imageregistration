@@ -12,7 +12,7 @@ TEST(Matching_Test, output_Matching_Test) {
 
   auto matching = cv::makePtr<stitching::matching::KnnMatching>();
 
-  EXPECT_THROW(matching->exec(features1, features2, 0), std::invalid_argument);
+  EXPECT_THROW(matching->exec(features1, features2), std::invalid_argument);
 }
 
 }  // namespace

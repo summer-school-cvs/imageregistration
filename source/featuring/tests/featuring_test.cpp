@@ -23,12 +23,12 @@ using Implementations = testing::Types<OrbFeaturing, SurfFeaturing>;
 
 TYPED_TEST_SUITE(FeaturingTest, Implementations);
 
-TYPED_TEST(FeaturingTest, NoFeatures) {
+TYPED_TEST(FeaturingTest, without_image) {
   EXPECT_THROW(this->featuring.exec(cv::Mat{}), std::invalid_argument);
 }
 
-TYPED_TEST(FeaturingTest, WithFeatures) {
-  auto image = cv::imread((this->test_dir / "images" / "img2_1.jpg").string());
+TYPED_TEST(FeaturingTest, with_image) {
+  auto image = cv::imread((this->test_dir / "indoors-close" / "0" / "0.jpg").string());
 
   auto features = this->featuring.exec(image);
 

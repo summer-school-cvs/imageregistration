@@ -1,5 +1,6 @@
 #pragma once
 
+#include <boost/property_tree/ptree.hpp>
 #include <memory>
 #include <opencv2/core/mat.hpp>
 
@@ -8,6 +9,8 @@ namespace stitching::core {
 class IWarping {
  public:
   virtual ~IWarping() = default;
+
+  virtual void configure(const boost::property_tree::ptree &) {}
 
   virtual void init() = 0;
   virtual void free() = 0;
