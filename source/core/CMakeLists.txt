@@ -15,6 +15,7 @@ target_sources(${PROJECT_NAME}
         include/stitching/core/factory.h
         include/stitching/core/features.h
         include/stitching/core/ifeaturing.h
+	include/stitching/core/isegmentation.h
         include/stitching/core/ihomography.h
         include/stitching/core/imatching.h
         include/stitching/core/istitcher.h
