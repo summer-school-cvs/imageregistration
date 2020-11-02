@@ -12,7 +12,7 @@ class Segmentation : public core::ISegmentation {
   void init() override;
   void free() override;
   
-  void execexec(cv::Mat & ,
+  void exec(cv::Mat & ,
                 std::vector<HypothesisPtr> &,
                 std::vector<cv::Mat> &) const override;
   
