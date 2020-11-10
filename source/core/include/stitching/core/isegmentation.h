@@ -6,6 +6,8 @@
 #include <vector>
 #include <memory>
 #include <stitching/core/hypothesis.h>
+#include <stitching/core/segmentationResult.h>
+#include <stitching/core/image.h>
 #include <utility>
 
 namespace stitching::core {
@@ -18,16 +20,8 @@ class ISegmentation {
 
   virtual void init()                             = 0;
 
-  struct ReturnResult
-  {
-    std::vector<std::pair<cv::Mat, int>> masks;
-    std::vector<HypothesisPtr> const myHypoteses;
-    std::vector<std::pair<int, int>> const hypotesMatch;
-  };
-
-  virtual ReturnResult & exec(std::vector<std::pair<cv::Mat, int>> const &,
-                    std::vector<HypothesisPtr> const &,
-                    std::vector<std::pair<int, int>> const &) const = 0;
+  virtual Result & exec(std::vector<Image> const &,
+                    std::vector<HypothesisPtr> const &) const = 0;
   
   virtual void free()                             = 0;
 };

@@ -12,11 +12,10 @@ class Segmentation : public core::ISegmentation {
   void init() override {}
   void free() override {}
 
-  ReturnResult & exec(std::vector<std::pair<cv::Mat, int>> const &,
-                      std::vector<stitching::core::HypothesisPtr> const &,
-                      std::vector<std::pair<int, int>> const &) const override
+  stitching::core::Result & exec(std::vector<stitching::core::Image> const &,
+                      std::vector<stitching::core::HypothesisPtr> const &) const override
   {
-      auto ans = ReturnResult();
+      auto ans = stitching::core::Result();
       return ans;
   }
   
