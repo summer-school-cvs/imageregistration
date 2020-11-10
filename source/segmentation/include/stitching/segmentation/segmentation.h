@@ -7,14 +7,18 @@ namespace stitching::segmentation {
 class Segmentation : public core::ISegmentation {
  public:
  
- Segmentation(){};
+ Segmentation(){}
 
-  void init() override;
-  void free() override;
-  
-  void exec(cv::Mat & ,
-                std::vector<HypothesisPtr> &,
-                std::vector<cv::Mat> &) const override;
+  void init() override {}
+  void free() override {}
+
+  ReturnResult & exec(std::vector<std::pair<cv::Mat, int>> const &,
+                      std::vector<stitching::core::HypothesisPtr> const &,
+                      std::vector<std::pair<int, int>> const &) const override
+  {
+      auto ans = ReturnResult();
+      return ans;
+  }
   
 };
 

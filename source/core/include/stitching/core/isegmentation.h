@@ -18,17 +18,16 @@ class ISegmentation {
 
   virtual void init()                             = 0;
 
-  struct returnResult
+  struct ReturnResult
   {
     std::vector<std::pair<cv::Mat, int>> masks;
     std::vector<HypothesisPtr> const myHypoteses;
     std::vector<std::pair<int, int>> const hypotesMatch;
   };
 
-  virtual void exec(std::vector<std::pair<cv::Mat, int>> const &,
+  virtual ReturnResult & exec(std::vector<std::pair<cv::Mat, int>> const &,
                     std::vector<HypothesisPtr> const &,
-                    std::vector<std::pair<int, int>> const &,
-                    returnResult &) const = 0;
+                    std::vector<std::pair<int, int>> const &) const = 0;
   
   virtual void free()                             = 0;
 };
