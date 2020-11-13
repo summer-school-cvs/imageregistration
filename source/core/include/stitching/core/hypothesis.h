@@ -11,6 +11,8 @@ struct Hypothesis {
   std::vector<cv::Point2f> first;
   std::vector<cv::Point2f> second;
   cv::Mat                  homography;
+  int from;
+  int to;
 };
 
 using HypothesisPtr  = std::shared_ptr<Hypothesis>;

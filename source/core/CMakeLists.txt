@@ -11,15 +11,19 @@ find_package(Boost REQUIRED)
 add_library(${PROJECT_NAME})
 target_sources(${PROJECT_NAME}
     PRIVATE
+        include/stitching/core/image.h
+        include/stitching/core/segmentationResult.h
         include/stitching/core/hypothesis.h
         include/stitching/core/factory.h
         include/stitching/core/features.h
         include/stitching/core/ifeaturing.h
+	include/stitching/core/isegmentation.h
         include/stitching/core/ihomography.h
         include/stitching/core/imatching.h
         include/stitching/core/istitcher.h
         include/stitching/core/iwarping.h
         include/stitching/core/logging.h
+
 
 
         src/logging.cpp
